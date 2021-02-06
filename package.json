@@ -1,0 +1,19 @@
+{
+  "name": "@hexlet/code",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/init.js",
+  "scripts": {
+    "test": "jest --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xaarxus/frontend-project-lvl3.git"
+  },
+  "author": "Sergey Cherkasov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xaarxus/frontend-project-lvl3/issues"
+  },
+  "homepage": "https://github.com/xaarxus/frontend-project-lvl3#readme"
+}
