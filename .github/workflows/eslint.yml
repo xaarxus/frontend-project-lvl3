@@ -1,0 +1,16 @@
+name: eslint
+
+on:
+  push:
+    branches: 
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install
+        run: make install
+      - name: eslint
+        run: make lint
