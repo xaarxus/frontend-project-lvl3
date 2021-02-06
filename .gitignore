@@ -2,3 +2,6 @@
 *.log
 dist
 assets
+typescript
+fsevents@latest
+fsevents
