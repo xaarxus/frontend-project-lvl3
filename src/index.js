@@ -1,1 +1,3 @@
-console.log('RSS');
+import app from './init.js';
+
+app();

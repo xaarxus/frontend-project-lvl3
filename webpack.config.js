@@ -32,4 +32,9 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
   ],
+
+  devServer: {
+    open: true,
+    host: 'localhost',
+  },
 };
