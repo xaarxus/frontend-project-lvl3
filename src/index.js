@@ -1,3 +1,3 @@
-import app from './init.js';
+const app = require('./init.js');
 
 app();

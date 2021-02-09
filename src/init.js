@@ -13,6 +13,5 @@ export default () => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     console.log(state.value);
-    input.setAttribute('value', '');
   });
 };
