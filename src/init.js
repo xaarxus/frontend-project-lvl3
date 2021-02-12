@@ -1,9 +1,13 @@
 import * as yup from 'yup';
 import axios from 'axios';
+import parser from './parser.js';
 
 export default () => {
   const state = {
     value: '',
+    rssFlows: [],
+    feeds: [],
+    posts: [],
   };
 
   const input = document.querySelector('input');
@@ -24,10 +28,20 @@ export default () => {
       .then((valid) => {
         const feedback = document.querySelector('.feedback');
         if (valid) {
+          const { value, rssFlows } = state;
+          if (rssFlows.includes(value)) {
+            input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
+            feedback.innerHTML = '<p class="text-success text-danger">rss flow has already been added</p>';
+            return;
+          }
+          state.rssFlows = [...rssFlows, value];
+          input.setAttribute('class', 'form-control form-control-lg w-100');
+          input.value = '';
           feedback.innerHTML = '<p class="text-success">RSS has been loaded</p>';
-          axios.get(state.value)
-            .then((respose) => console.log(respose.data));
+          axios.get(value)
+            .then((respose) => console.log(parser(respose.data)));
         } else {
+          input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
           feedback.innerHTML = '<p class="text-success text-danger">It\'s not valid RSS link</p>';
         }
       });
