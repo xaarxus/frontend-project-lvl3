@@ -1,6 +1,9 @@
 import * as yup from 'yup';
 import axios from 'axios';
+import onChange from 'on-change';
 import parser from './parser.js';
+import addFeed from './addFeed.js';
+import addPosts from './addPosts.js';
 
 export default () => {
   const state = {
@@ -45,10 +48,17 @@ export default () => {
 
               const { feeds, posts } = state;
 
-              state.feeds = [newFeed, ...feeds];
-              state.posts = [newPosts, ...posts];
+              const watchedState = onChange(state, (path, newValue) => {
+                if (path === 'feeds') {
+                  addFeed(newValue);
+                }
+                if (path === 'posts') {
+                  addPosts(newValue);
+                }
+              });
 
-              console.log(newFeed, newPosts);
+              watchedState.feeds = [newFeed, ...feeds];
+              watchedState.posts = [...newPosts, ...posts];
             });
         } else {
           input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
