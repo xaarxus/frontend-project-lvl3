@@ -14,7 +14,7 @@ const close = (e) => {
   div.parentNode.removeChild(div);
 };
 
-const preview = ({ title, description, link }) => (e) => {
+export default ({ title, description, link }) => (e) => {
   e.preventDefault();
   const body = document.querySelector('body');
   body.setAttribute('class', 'd-flex flex-column min-vh-100 modal-open');
@@ -41,5 +41,3 @@ const preview = ({ title, description, link }) => (e) => {
   const closeButtons = modalDiv.querySelectorAll('button');
   closeButtons.forEach((button) => button.addEventListener('click', close));
 };
-
-export { close, preview };

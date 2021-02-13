@@ -1,4 +1,4 @@
-import { preview } from './eventListeners.js';
+import preview from './eventListeners.js';
 
 export default (posts) => {
   const div = document.querySelector('.posts');
