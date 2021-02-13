@@ -22,6 +22,10 @@ export default () => {
   const form = document.querySelector('form');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    const formButtom = form.querySelector('button');
+    const formInput = form.querySelector('input');
+    formButtom.setAttribute('disabled', 'true');
+    formInput.setAttribute('readonly', 'true');
     const schema = yup.object().shape({
       url: yup.string().url(),
     });
@@ -40,9 +44,9 @@ export default () => {
           state.rssFlows = [...rssFlows, value];
           input.setAttribute('class', 'form-control form-control-lg w-100');
           input.value = '';
-          feedback.innerHTML = '<p class="text-success">RSS has been loaded</p>';
-          axios.get(value)
+          axios.get(value, { timeout: 10000 })
             .then((respose) => {
+              feedback.innerHTML = '<p class="text-success">RSS has been loaded</p>';
               const data = parser(respose.data);
               const { newFeed, newPosts } = data;
 
@@ -59,11 +63,17 @@ export default () => {
 
               watchedState.feeds = [newFeed, ...feeds];
               watchedState.posts = [...newPosts, ...posts];
+            })
+            .catch(() => {
+              input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
+              feedback.innerHTML = '<p class="text-success text-danger">Network error</p>';
             });
         } else {
           input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
           feedback.innerHTML = '<p class="text-success text-danger">It\'s not valid RSS link</p>';
         }
       });
+    formButtom.removeAttribute('disabled');
+    formInput.removeAttribute('readonly');
   });
 };

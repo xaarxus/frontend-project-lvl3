@@ -1,11 +1,12 @@
+import { preview } from './eventListeners.js';
+
 export default (posts) => {
   const div = document.querySelector('.posts');
   div.innerHTML = '<h2>Posts</h2>';
   const ul = document.createElement('ul');
   ul.setAttribute('class', 'list-group');
   posts.forEach((item) => {
-      console.log(item)
-    const { title, description, link } = item;
+    const { title, link } = item;
     const li = document.createElement('li');
     li.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-start');
     const a = document.createElement('a');
@@ -21,6 +22,8 @@ export default (posts) => {
     button.setAttribute('data-toggle', 'modal');
     button.setAttribute('data-target', '#modal');
     button.innerHTML = 'Preview';
+
+    button.addEventListener('click', preview(item));
 
     li.append(a, button);
     ul.append(li);
