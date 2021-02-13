@@ -1,10 +1,9 @@
-import parser from './parser.js';
+import * as yup from 'yup';
+import axios from 'axios';
+import onChange from 'on-change';
 import addFeed from './addFeed.js';
 import addPosts from './addPosts.js';
-
-const yup = require('yup');
-const axios = require('axios');
-const onChange = require('on-change');
+import parser from './parser.js';
 
 export default () => {
   const state = {
@@ -42,14 +41,13 @@ export default () => {
             feedback.innerHTML = '<p class="text-success text-danger">Rss already exists</p>';
             return;
           }
-          state.rssFlows = [...rssFlows, value];
           input.setAttribute('class', 'form-control form-control-lg w-100');
           input.value = '';
           axios.get(value, { timeout: 10000 })
             .then((respose) => {
+              state.rssFlows = [...rssFlows, value];
               feedback.innerHTML = '<p class="text-success">RSS has been loaded</p>';
-              const data = parser(respose.data);
-              const { newFeed, newPosts } = data;
+              const { newFeed, newPosts } = parser(respose.data);
 
               const { feeds, posts } = state;
 

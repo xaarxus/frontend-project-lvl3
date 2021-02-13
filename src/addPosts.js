@@ -1,16 +1,14 @@
 import preview from './eventListeners.js';
 
-const { uniqueId } = require('lodash');
-
 export default (posts) => {
   const div = document.querySelector('.posts');
   div.innerHTML = '<h2>Posts</h2>';
   const ul = document.createElement('ul');
   ul.setAttribute('class', 'list-group');
   posts.forEach((item) => {
-    const { title, link } = item;
+    const { id, title, link } = item;
     const li = document.createElement('li');
-    li.setAttribute('id', uniqueId());
+    li.setAttribute('id', id);
     li.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-start');
     const a = document.createElement('a');
     a.setAttribute('class', 'font-weight-bold');
