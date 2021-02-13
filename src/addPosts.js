@@ -1,5 +1,6 @@
-import { uniqueId } from 'lodash';
 import preview from './eventListeners.js';
+
+const { uniqueId } = require('lodash');
 
 export default (posts) => {
   const div = document.querySelector('.posts');
