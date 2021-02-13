@@ -1,3 +1,5 @@
+import { uniqueId } from 'lodash';
+
 export default (feed) => {
   const div = document.querySelector('.feeds');
   div.innerHTML = '<h2>Feeds</h2>';
@@ -6,6 +8,7 @@ export default (feed) => {
   feed.forEach((item) => {
     const { title, description } = item;
     const li = document.createElement('li');
+    li.setAttribute('id', uniqueId());
     li.setAttribute('class', 'list-group-item');
     li.innerHTML = `<h3>${title}</h3><p>${description}</p>`;
     ul.append(li);
