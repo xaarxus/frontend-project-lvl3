@@ -18,7 +18,6 @@ module.exports = {
 
   entry: {
     index: './src/index.js',
-    init: './src/init.js',
   },
 
   output: {
