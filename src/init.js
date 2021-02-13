@@ -1,9 +1,10 @@
-import * as yup from 'yup';
-import axios from 'axios';
-import onChange from 'on-change';
 import parser from './parser.js';
 import addFeed from './addFeed.js';
 import addPosts from './addPosts.js';
+
+const yup = require('yup');
+const axios = require('axios');
+const onChange = require('on-change');
 
 export default () => {
   const state = {
