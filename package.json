@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "build": "make build",
     "test": "jest --colors"
   },
   "repository": {
@@ -46,5 +47,8 @@
     "on-change": "^2.2.3",
     "vercel": "^21.2.3",
     "yup": "^0.32.8"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.1"
   }
 }

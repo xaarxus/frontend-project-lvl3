@@ -5,3 +5,4 @@ assets
 typescript
 fsevents@latest
 fsevents
+.vercel
