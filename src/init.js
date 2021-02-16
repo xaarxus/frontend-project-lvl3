@@ -62,6 +62,14 @@ export default () => {
 
               watchedState.feeds = [newFeed, ...feeds];
               watchedState.posts = [...newPosts, ...posts];
+
+              setInterval(() => {
+                axios.get(value, { timeout: 10000 })
+                  .then((res) => {
+                    const updatePosts = parser(res.data).newPosts;
+                    watchedState.posts = [...updatePosts, ...posts];
+                  });
+              }, 4000);
             })
             .catch(() => {
               input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
