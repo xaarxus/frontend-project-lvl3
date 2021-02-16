@@ -20,6 +20,7 @@ export default ({ title, description, link }) => (e) => {
   body.setAttribute('class', 'd-flex flex-column min-vh-100 modal-open');
   body.setAttribute('style', 'padding-right: 16px;');
   const div = document.createElement('div');
+  div.addEventListener('click', close);
   div.setAttribute('class', 'modal-backdrop fade show');
   body.append(div);
 
