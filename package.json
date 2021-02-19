@@ -43,6 +43,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "i18next": "^19.8.8",
     "lodash": "^4.17.20",
     "on-change": "^2.2.3",
     "vercel": "^21.2.3",
