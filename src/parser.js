@@ -1,9 +1,4 @@
-const createID = () => {
-  const id = { value: 0 };
-  const { value } = id;
-  id.value += 1;
-  return value;
-};
+import _ from 'lodash';
 
 export default (data) => {
   const parser = new DOMParser();
@@ -12,7 +7,7 @@ export default (data) => {
 
   const feedTitle = channel.querySelector('title').innerHTML;
   const feedDescription = channel.querySelector('description').innerHTML;
-  const newFeed = { id: createID(), title: feedTitle, description: feedDescription };
+  const newFeed = { id: _.uniqueId(), title: feedTitle, description: feedDescription };
 
   const posts = channel.querySelectorAll('item');
   const newPosts = [];
@@ -21,7 +16,7 @@ export default (data) => {
     const description = item.querySelector('description').innerHTML;
     const link = item.querySelector('link').innerHTML;
     newPosts.push({
-      id: createID(),
+      id: _.uniqueId(),
       title,
       description,
       link,
