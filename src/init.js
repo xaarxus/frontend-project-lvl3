@@ -87,6 +87,7 @@ export default () => {
           input.value = '';
           axios.get(value, { timeout: 10000 })
             .then((respose) => {
+              console.log(respose);
               state.rssFlows = [...rssFlows, value];
               feedback.innerHTML = `<p class="text-success">${i18next.t('feedback.success')}</p>`;
               const { newFeed, newPosts } = parser(respose.data);
