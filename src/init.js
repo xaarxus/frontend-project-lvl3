@@ -36,8 +36,9 @@ export default () => {
 
   const getNewPosts = () => {
     const { posts, rssFlows } = state;
-    const promises = rssFlows.map(((link) => axios.get(link)
-      .then((respose) => parser(respose.data))
+    const promises = rssFlows.map(((link) => fetch(`https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(link)}`)
+      .then((res) => axios.get(res.url)
+        .then((respose) => parser(respose.data.contents)))
     ));
     Promise.all(promises)
       .then((response) => response.map((item) => item.newPosts))
@@ -85,24 +86,27 @@ export default () => {
           }
           input.setAttribute('class', 'form-control form-control-lg w-100');
           input.value = '';
-          axios.get(value, { timeout: 10000 })
-            .then((respose) => {
-              console.log(respose);
-              state.rssFlows = [...rssFlows, value];
-              feedback.innerHTML = `<p class="text-success">${i18next.t('feedback.success')}</p>`;
-              const { newFeed, newPosts } = parser(respose.data);
+          fetch(`https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(value)}`)
+            .then((res) => {
+              axios.get(res.url, { timeout: 10000 })
+                .then((respose) => {
+                  feedback.innerHTML = `<p class="text-success">${i18next.t('feedback.success')}</p>`;
+                  const { newFeed, newPosts } = parser(respose.data.contents);
 
-              const { feeds, posts } = state;
+                  const { feeds, posts } = state;
 
-              watchedState.feeds = [newFeed, ...feeds];
-              watchedState.posts = [...newPosts, ...posts];
+                  watchedState.feeds = [newFeed, ...feeds];
+                  watchedState.posts = [...newPosts, ...posts];
 
-              clearTimeout(state.timeoutID);
-              state.timeoutID = setTimeout(getNewPosts, 5000);
-            })
-            .catch(() => {
-              input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
-              feedback.innerHTML = `<p class="text-success text-danger">${i18next.t('feedback.networkError')}</p>`;
+                  state.rssFlows = [...rssFlows, value];
+
+                  clearTimeout(state.timeoutID);
+                  state.timeoutID = setTimeout(getNewPosts, 5000);
+                })
+                .catch(() => {
+                  input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
+                  feedback.innerHTML = `<p class="text-success text-danger">${i18next.t('feedback.networkError')}</p>`;
+                });
             });
         } else {
           input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
