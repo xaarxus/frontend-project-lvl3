@@ -86,7 +86,7 @@ export default () => {
           }
           input.setAttribute('class', 'form-control form-control-lg w-100');
           input.value = '';
-          fetch(`https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(value)}`)
+          fetch(`https://hexlet-allorigins.herokuapp.com/rew?url=${encodeURIComponent(value)}`)
             .then((res) => {
               axios.get(res.url, { timeout: 10000 })
                 .then((respose) => {
