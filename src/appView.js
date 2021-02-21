@@ -4,7 +4,7 @@ const handlePost = (id) => {
   const { IdReadedPosts } = watchedState;
   console.log(id);
   watchedState.IdReadedPosts = [...IdReadedPosts, id];
-  const liElem = document.querySelector(`#${id}`);
+  const liElem = document.getElementById(id);
   const a = liElem.querySelector('a');
   a.setAttribute('class', 'font-weight-normal');
 };
