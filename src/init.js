@@ -1,41 +1,15 @@
 import * as yup from 'yup';
 import axios from 'axios';
-import onChange from 'on-change';
-import i18next from 'i18next';
 
-import { addFeed, addPosts } from './addContent.js';
 import parser from './parser.js';
 import buildHTML from './buildHTML.js';
-import ru from '../locales/ru.js';
+import watchedState from './appModal.js';
 
 export default () => {
-  const state = {
-    timeoutID: null,
-    value: '',
-    rssFlows: [],
-    feeds: [],
-    posts: [],
-  };
-
-  const watchedState = onChange(state, (path, newValue) => {
-    if (path === 'feeds') {
-      addFeed(newValue);
-    }
-    if (path === 'posts') {
-      addPosts(newValue, i18next);
-    }
-  });
-
-  i18next.init({
-    lng: 'ru',
-    debug: true,
-    resources: {
-      ru,
-    },
-  });
+  buildHTML(watchedState.i18next);
 
   const getNewPosts = () => {
-    const { posts, rssFlows } = state;
+    const { posts, rssFlows } = watchedState;
     const promises = rssFlows.map(((link) => fetch(`https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(link)}`)
       .then((res) => axios.get(res.url)
         .then((respose) => parser(respose.data.contents)))
@@ -49,16 +23,14 @@ export default () => {
         watchedState.posts = [...newAllPosts, ...posts];
       });
 
-    clearTimeout(state.timeoutID);
-    state.timeoutID = setTimeout(getNewPosts, 5000);
+    clearTimeout(watchedState.timeoutID);
+    watchedState.timeoutID = setTimeout(getNewPosts, 5000);
   };
-
-  buildHTML(i18next);
 
   const input = document.querySelector('input');
   input.addEventListener('input', (e) => {
     e.preventDefault();
-    state.value = e.target.value;
+    watchedState.value = e.target.value;
   });
 
   const form = document.querySelector('form');
@@ -73,15 +45,15 @@ export default () => {
     });
 
     schema.isValid({
-      url: state.value,
+      url: watchedState.value,
     })
       .then((valid) => {
         const feedback = document.querySelector('.feedback');
         if (valid) {
-          const { value, rssFlows } = state;
+          const { value, rssFlows } = watchedState;
           if (rssFlows.includes(value)) {
             input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
-            feedback.innerHTML = `<p class="text-success text-danger">${i18next.t('feedback.exists')}</p>`;
+            feedback.innerHTML = `<p class="text-success text-danger">${watchedState.i18next.t('feedback.exists')}</p>`;
             return;
           }
           input.setAttribute('class', 'form-control form-control-lg w-100');
@@ -90,27 +62,27 @@ export default () => {
             .then((res) => {
               axios.get(res.url, { timeout: 10000 })
                 .then((respose) => {
-                  feedback.innerHTML = `<p class="text-success">${i18next.t('feedback.success')}</p>`;
+                  feedback.innerHTML = `<p class="text-success">${watchedState.i18next.t('feedback.success')}</p>`;
                   const { newFeed, newPosts } = parser(respose.data.contents);
 
-                  const { feeds, posts } = state;
+                  const { feeds, posts } = watchedState;
 
                   watchedState.feeds = [newFeed, ...feeds];
                   watchedState.posts = [...newPosts, ...posts];
 
-                  state.rssFlows = [...rssFlows, value];
+                  watchedState.rssFlows = [...rssFlows, value];
 
-                  clearTimeout(state.timeoutID);
-                  state.timeoutID = setTimeout(getNewPosts, 5000);
+                  clearTimeout(watchedState.timeoutID);
+                  watchedState.timeoutID = setTimeout(getNewPosts, 5000);
                 })
                 .catch(() => {
                   input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
-                  feedback.innerHTML = `<p class="text-success text-danger">${i18next.t('feedback.networkError')}</p>`;
+                  feedback.innerHTML = `<p class="text-success text-danger">${watchedState.i18next.t('feedback.networkError')}</p>`;
                 });
             });
         } else {
           input.setAttribute('class', 'border border-danger form-control form-control-lg w-100');
-          feedback.innerHTML = `<p class="text-success text-danger">${i18next.t('feedback.validUrl')}</p>`;
+          feedback.innerHTML = `<p class="text-success text-danger">${watchedState.i18next.t('feedback.validUrl')}</p>`;
         }
       });
     formButtom.removeAttribute('disabled');

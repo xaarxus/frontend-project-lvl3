@@ -6,7 +6,7 @@ export default ({
         input: 'ссылка RSS',
         add: 'Добавить',
       },
-      example: 'Пример: https://rss.art19.com/the-daily',
+      example: 'Пример: https://ithappens.ru/rss/',
       modal: {
         prewiev: 'Просмотр',
         fullArticle: 'Читать полностью',

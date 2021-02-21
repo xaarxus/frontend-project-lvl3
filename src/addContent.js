@@ -35,14 +35,14 @@ const preview = ({ title, description, link }) => (e) => {
   const modalBody = modalDiv.querySelector('.modal-body');
   modalBody.innerHTML = description;
 
-  const modalLink = modalDiv.querySelector('a');
+  const modalLink = modalDiv.querySelector('.full-article');
   modalLink.setAttribute('href', link);
 
   const closeButtons = modalDiv.querySelectorAll('button');
   closeButtons.forEach((button) => button.addEventListener('click', close));
 };
 
-const addPosts = (posts, i18next) => {
+const addPosts = (posts, i18next, IdReadedPosts) => {
   const div = document.querySelector('.posts');
   div.innerHTML = '<h2>Посты</h2>';
   const ul = document.createElement('ul');
@@ -53,7 +53,11 @@ const addPosts = (posts, i18next) => {
     li.setAttribute('id', id);
     li.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-start');
     const a = document.createElement('a');
-    a.setAttribute('class', 'font-weight-bold');
+    if (IdReadedPosts.includes(id)) {
+      a.setAttribute('class', 'font-weight-normal');
+    } else {
+      a.setAttribute('class', 'font-weight-bold');
+    }
     a.setAttribute('href', link);
     a.setAttribute('rel', 'noopener noreferrer');
     a.setAttribute('target', '_blank');
