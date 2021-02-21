@@ -1,13 +1,4 @@
-import watchedState from './appModal.js';
-
-const handlePost = (id) => {
-  const { IdReadedPosts } = watchedState;
-  console.log(id);
-  watchedState.IdReadedPosts = [...IdReadedPosts, id];
-  const liElem = document.getElementById(id);
-  const a = liElem.querySelector('a');
-  a.setAttribute('class', 'font-weight-normal');
-};
+import { handlePost } from './appController.js';
 
 const close = (e) => {
   e.preventDefault();
