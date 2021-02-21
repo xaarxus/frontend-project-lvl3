@@ -2,6 +2,7 @@ import watchedState from './appModal.js';
 
 const handlePost = (id) => {
   const { IdReadedPosts } = watchedState;
+  console.log(id);
   watchedState.IdReadedPosts = [...IdReadedPosts, id];
   const liElem = document.querySelector(`#${id}`);
   const a = liElem.querySelector('a');
