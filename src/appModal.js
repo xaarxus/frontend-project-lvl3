@@ -3,6 +3,14 @@ import i18next from 'i18next';
 import ru from '../locales/ru.js';
 import { addFeed, addPosts } from './addContent.js';
 
+i18next.init({
+  lng: 'ru',
+  debug: true,
+  resources: {
+    ru,
+  },
+});
+
 const state = {
   timeoutID: null,
   value: '',
@@ -10,13 +18,7 @@ const state = {
   feeds: [],
   posts: [],
   IdReadedPosts: [],
-  i18next: i18next.init({
-    lng: 'ru',
-    debug: true,
-    resources: {
-      ru,
-    },
-  }),
+  i18next,
 };
 
 export default onChange(state, (path, newValue) => {
