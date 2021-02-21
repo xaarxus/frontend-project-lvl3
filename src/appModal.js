@@ -1,7 +1,7 @@
 import onChange from 'on-change';
 import i18next from 'i18next';
 import ru from '../locales/ru.js';
-import { addFeed, addPosts } from './addContent.js';
+import { addFeed, addPosts } from './appView.js';
 
 i18next.init({
   lng: 'ru',

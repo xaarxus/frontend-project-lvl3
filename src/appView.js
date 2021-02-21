@@ -1,3 +1,13 @@
+import watchedState from './appModal.js';
+
+const handlePost = (id) => {
+  const { IdReadedPosts } = watchedState;
+  watchedState.IdReadedPosts = [...IdReadedPosts, id];
+  const liElem = document.querySelector(`#${id}`);
+  const a = liElem.querySelector('a');
+  a.setAttribute('class', 'font-weight-normal');
+};
+
 const close = (e) => {
   e.preventDefault();
   const body = document.querySelector('body');
@@ -14,8 +24,15 @@ const close = (e) => {
   div.parentNode.removeChild(div);
 };
 
-const preview = ({ title, description, link }) => (e) => {
+const preview = (elem) => (e) => {
+  const {
+    id,
+    title,
+    description,
+    link,
+  } = elem;
   e.preventDefault();
+  handlePost(id);
   const body = document.querySelector('body');
   body.setAttribute('class', 'd-flex flex-column min-vh-100 modal-open');
   body.setAttribute('style', 'padding-right: 16px;');
@@ -62,6 +79,9 @@ const addPosts = (posts, i18next, IdReadedPosts) => {
     a.setAttribute('rel', 'noopener noreferrer');
     a.setAttribute('target', '_blank');
     a.innerHTML = title;
+    a.addEventListener('click', () => {
+      handlePost(id);
+    });
 
     const button = document.createElement('button');
     button.setAttribute('class', 'btn btn-primary btn-sm prewiev');
