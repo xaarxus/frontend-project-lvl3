@@ -26,6 +26,6 @@ export default onChange(state, (path, newValue) => {
     addFeed(newValue);
   }
   if (path === 'posts') {
-    addPosts(newValue, i18next, state.IdReadedPosts);
+    addPosts(newValue, state.i18next, state.IdReadedPosts);
   }
 });
