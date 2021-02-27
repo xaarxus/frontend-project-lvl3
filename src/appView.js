@@ -1,4 +1,4 @@
-import { handlePost } from './appController.js';
+import { handlePost, selectLng } from './appController.js';
 
 const close = (e) => {
   e.preventDefault();
@@ -53,7 +53,7 @@ const preview = (elem) => (e) => {
 
 const addPosts = (posts, i18next, IdReadedPosts) => {
   const div = document.querySelector('.posts');
-  div.innerHTML = '<h2>Посты</h2>';
+  div.innerHTML = `<h2 class="posts-text">${i18next.t('texts.post')}</h2>`;
   const ul = document.createElement('ul');
   ul.setAttribute('class', 'list-group');
   posts.forEach((item) => {
@@ -90,9 +90,9 @@ const addPosts = (posts, i18next, IdReadedPosts) => {
   div.append(ul);
 };
 
-const addFeed = (feed) => {
+const addFeed = (feed, i18next) => {
   const div = document.querySelector('.feeds');
-  div.innerHTML = '<h2>Фиды</h2>';
+  div.innerHTML = `<h2 class="feeds-text">${i18next.t('texts.feed')}</h2>`;
   const ul = document.createElement('ul');
   ul.setAttribute('class', 'list-group mb-5');
   feed.forEach((item) => {
@@ -106,4 +106,25 @@ const addFeed = (feed) => {
   div.append(ul);
 };
 
-export { addFeed, addPosts };
+const buildHtml = (i18next) => {
+  document.querySelectorAll('.flag-icon').forEach((item) => {
+    item.addEventListener('click', selectLng(item.id));
+  });
+  const feeds = document.querySelector('.feeds-text');
+  if (feeds) {
+    feeds.innerHTML = i18next.t('texts.feed');
+  }
+  const posts = document.querySelector('.posts-text');
+  if (posts) {
+    posts.innerHTML = i18next.t('texts.post');
+  }
+  document.querySelector('h1').innerHTML = i18next.t('texts.h1');
+  document.querySelector('.example').innerHTML = i18next.t('texts.example');
+  document.querySelector('#add').innerHTML = i18next.t('texts.form.add');
+  document.querySelector('#formInput').setAttribute('placeholder', i18next.t('texts.form.input'));
+
+  document.querySelector('.full-article').innerHTML = i18next.t('texts.modal.fullArticle');
+  document.querySelector('#close').innerHTML = i18next.t('texts.modal.close');
+};
+
+export { addFeed, addPosts, buildHtml };

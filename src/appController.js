@@ -3,6 +3,16 @@ import axios from 'axios';
 import watchedState from './appModal.js';
 import parser from './parser.js';
 
+const selectLng = (message) => () => {
+  switch (message) {
+    case 'gb':
+      watchedState.i18next.lng = 'gb';
+      break;
+    default:
+      watchedState.i18next.lng = 'ru';
+  }
+};
+
 const getNewPosts = () => {
   const { posts, rssFlows } = watchedState;
   const promises = rssFlows.map(((link) => fetch(`https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(link)}`)
@@ -95,4 +105,4 @@ const handlePost = (id) => {
   a.setAttribute('class', 'font-weight-normal');
 };
 
-export { handlePost, formValidator };
+export { handlePost, formValidator, selectLng };

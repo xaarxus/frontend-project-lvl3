@@ -30,4 +30,8 @@ module.exports = {
       template: './index.html',
     }),
   ],
+  devServer: {
+    open: true,
+    host: 'localhost',
+  },
 };

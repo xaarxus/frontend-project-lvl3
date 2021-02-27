@@ -1,6 +1,8 @@
 export default ({
   translation: {
     texts: {
+      feed: 'Фиды',
+      post: 'Посты',
       h1: 'RSS агрегатор',
       form: {
         input: 'ссылка RSS',
