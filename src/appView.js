@@ -31,22 +31,17 @@ const preview = (elem) => (e) => {
   const div = document.createElement('div');
   div.setAttribute('class', 'modal-backdrop fade show');
   body.append(div);
-
   const modalDiv = document.querySelector('#modal');
   modalDiv.setAttribute('class', 'modal fade show');
   modalDiv.setAttribute('style', 'display: block; padding-right: 16px;');
   modalDiv.setAttribute('aria-modal', 'true');
   modalDiv.removeAttribute('aria-hidden');
-
   const modalTitle = modalDiv.querySelector('.modal-title');
   modalTitle.innerHTML = title;
-
   const modalBody = modalDiv.querySelector('.modal-body');
   modalBody.innerHTML = description;
-
   const modalLink = modalDiv.querySelector('.full-article');
   modalLink.setAttribute('href', link);
-
   const closeButtons = modalDiv.querySelectorAll('button');
   closeButtons.forEach((button) => button.addEventListener('click', close));
 };
@@ -74,16 +69,13 @@ const addPosts = (posts, i18next, IdReadedPosts) => {
     a.addEventListener('click', () => {
       handlePost(id);
     });
-
     const button = document.createElement('button');
     button.setAttribute('class', 'btn btn-primary btn-sm prewiev');
     button.setAttribute('type', 'button');
     button.setAttribute('data-toggle', 'modal');
     button.setAttribute('data-target', '#modal');
     button.innerHTML = i18next.t('texts.modal.prewiev');
-
     button.addEventListener('click', preview(item));
-
     li.append(a, button);
     ul.append(li);
   });

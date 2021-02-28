@@ -39,19 +39,11 @@ const changeInput = (e) => {
 
 const formValidator = (e) => {
   e.preventDefault();
-  const form = document.querySelector('form');
-
   const input = document.querySelector('input');
   input.addEventListener('input', changeInput);
-
-  const formButtom = form.querySelector('button');
-  const formInput = form.querySelector('input');
-  formButtom.setAttribute('disabled', 'true');
-  formInput.setAttribute('readonly', 'true');
   const schema = yup.object().shape({
     url: yup.string().url(),
   });
-
   schema.isValid({
     url: watchedState.value,
   })
@@ -72,14 +64,10 @@ const formValidator = (e) => {
               .then((respose) => {
                 feedback.innerHTML = `<p class="text-success">${watchedState.i18next.t('feedback.success')}</p>`;
                 const { newFeed, newPosts } = parser(respose.data.contents);
-
                 const { feeds, posts } = watchedState;
-
                 watchedState.feeds = [newFeed, ...feeds];
                 watchedState.posts = [...newPosts, ...posts];
-
                 watchedState.rssFlows = [...rssFlows, value];
-
                 clearTimeout(watchedState.timeoutID);
                 watchedState.timeoutID = setTimeout(getNewPosts, 5000);
               })
@@ -93,8 +81,6 @@ const formValidator = (e) => {
         feedback.innerHTML = `<p class="text-success text-danger">${watchedState.i18next.t('feedback.validUrl')}</p>`;
       }
     });
-  formButtom.removeAttribute('disabled');
-  formInput.removeAttribute('readonly');
 };
 
 const handlePost = (id) => {
