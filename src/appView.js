@@ -99,7 +99,7 @@ const addFeed = (feed, i18next) => {
 };
 
 const buildHtml = (i18next) => {
-  document.querySelectorAll('.flag-icon').forEach((item) => {
+  document.querySelectorAll('.lang').forEach((item) => {
     item.addEventListener('click', selectLng(item.id));
   });
   const feeds = document.querySelector('.feeds-text');
