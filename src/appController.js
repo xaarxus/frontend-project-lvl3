@@ -3,7 +3,8 @@ import axios from 'axios';
 import watchedState from './appModal.js';
 import parser from './parser.js';
 
-const selectLng = (message) => () => {
+const selectLng = (message) => (e) => {
+  e.preventDefault();
   switch (message) {
     case 'gb':
       watchedState.i18next.lng = 'gb';
